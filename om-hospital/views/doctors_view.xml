@@ -1,22 +1,20 @@
 <odoo>
-    <record id="patient_view_tree" model="ir.ui.view">
-        <field name="name">Patients Tree </field>
-        <field name="model">hospital.patient</field>
+
+<!--    This is Search view of doctors-->
+     <record id="doctors_view_search" model="ir.ui.view">
+        <field name="name">Doctors Search </field>
+        <field name="model">hospital.doctors</field>
         <field name="arch" type="xml">
-            <tree>
+            <search>
+                 <field name="age"> </field>
                 <field name="name"> </field>
-                <field name="height"> </field>
-                <field name="phone_number"> </field>
-                <field name="country"> </field>
-                <field name="age"> </field>
-                <field name="gender"> </field>
-                <field name="weight"> </field>
-                <field name="date_of_birth"> </field>
-            </tree>
-
+<!--                string attribute this is display name for End user-->
+                <filter name="age" string="Age" domain="['|',('age','=','22'),('age','=','25')]"> </filter>
+                <filter name="group_by" string="Country" context="{'group_by':'country'}"> </filter>
+            </search>
         </field>
-
     </record>
+<!--    This is Tree view of Doctors-->
 
      <record id="doctor_view_tree" model="ir.ui.view">
         <field name="name">Doctors Tree</field>
@@ -24,12 +22,15 @@
         <field name="arch" type="xml">
             <tree>
              <field name="name"> </field>
-                <field name="phone_number"> </field>
+             <field name="phone_number"> </field>
+             <field name="age"> </field>
             <field name="gender"> </field>
             <field name="country"> </field>
+
             </tree>
         </field>
     </record>
+<!--    This is Form View of Doctors-->
      <record id="doctor_view_form" model="ir.ui.view">
     <field name="name">Doctors form</field>
     <field name="model">hospital.doctors</field>
