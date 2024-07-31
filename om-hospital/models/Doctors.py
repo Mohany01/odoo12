@@ -4,7 +4,7 @@ from odoo import models, fields
 
 class HospitalManagement(models.Model):
     _name = 'hospital.doctors'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
+    _inherit = ['mail.thread', 'mail.activity.mixin']  #_inherit is attribute and in _inherit tables
     _description = 'Doctors Record'
     name = fields.Char()
     phone_number = fields.Char()

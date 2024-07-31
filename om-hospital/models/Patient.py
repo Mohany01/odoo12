@@ -1,5 +1,6 @@
 # noinspection PyUnresolvedReferences
 from odoo import models, fields,api ,_
+import datetime
 
 
 class HospitalManagement(models.Model):
@@ -12,7 +13,7 @@ class HospitalManagement(models.Model):
     weight = fields.Float()
     date_of_birth = fields.Date()
     country = fields.Char()
-    age = fields.Integer()
+    age = fields.Integer(compute='calc_age')
     gender = fields.Selection([
         ('male', 'Male'),
         ('female', 'Female')
@@ -25,9 +26,15 @@ class HospitalManagement(models.Model):
     def create(self, vals):
         if vals.get('name_sequence', _('New')) == _('New'):
             vals['name_sequence'] = self.env['ir.sequence'].next_by_code('hospital.patient') or _('New')
-
+        # this line create the record
         result = super(HospitalManagement, self).create(vals)
         return result
 
+    @api.depends('date_of_birth')
+    def calc_age(self):
+        for record in self:
+            if record.date_of_birth:
+                 date_obj = fields.Date.from_string(record.date_of_birth)
+                 record.age = datetime.datetime.now().year-date_obj.year
 
 
