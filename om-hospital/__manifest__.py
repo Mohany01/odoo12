@@ -4,12 +4,13 @@
     'category':'Extra Tools',
     'summary':'first module',
     'author':'Mohammed Hany',
-    'depends':['base'],
+    'depends':['base','mail'],
     'data':[
         'views/base_menu.xml',
         'security/ir.model.access.csv',
         'views/doctors_view.xml',
-        'views/patients_view.xml'
+        'views/patients_view.xml',
+        'data/sequence.xml'
 
      ],
     'installable':True,
