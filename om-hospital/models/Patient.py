@@ -1,14 +1,16 @@
 # noinspection PyUnresolvedReferences
-from odoo import models, fields,api ,_
+from odoo import models, fields, api, _
 import datetime
+
+from odoo.odoo.exceptions import ValidationError
 
 
 class HospitalManagement(models.Model):
     _name = 'hospital.patient'
     _description = 'Patient Record'
     # _log_access = False
-    name = fields.Char()
-    height = fields.Float()
+    name = fields.Char(required=1, default="New", size=7)
+    height = fields.Float(digits=(1, 3))
     phone_number = fields.Char()
     weight = fields.Float()
     date_of_birth = fields.Date()
@@ -19,8 +21,9 @@ class HospitalManagement(models.Model):
         ('female', 'Female')
     ])
     image = fields.Binary()
-    name_sequence = fields.Char(string='Patient Sequence', required=True, copy=False, readonly=True,
+    name_sequence = fields.Char(string='Patient Sequence', required=True, copy=False, readonly=1,
                                 index=True, default=lambda self: _('New'))
+    _sql_constraints = [('unique_name', 'unique("name")', 'This name already exist')]
 
     @api.model
     def create(self, vals):
@@ -34,7 +37,11 @@ class HospitalManagement(models.Model):
     def calc_age(self):
         for record in self:
             if record.date_of_birth:
-                 date_obj = fields.Date.from_string(record.date_of_birth)
-                 record.age = datetime.datetime.now().year-date_obj.year
+                date_obj = fields.Date.from_string(record.date_of_birth)
+                record.age = datetime.datetime.now().year - date_obj.year
 
-
+    @api.constrains('height', 'weight')
+    def _check_height_weight_validation(self):
+        for rec in self:
+            if rec.height == 0 or rec.weight == 0:
+                raise ValidationError('Please Add valid Number')
