@@ -7,10 +7,10 @@
         <field name="arch" type="xml">
             <search>
                  <field name="age"> </field>
-                <field name="name"> </field>
+                 <field name="name"> </field>
 <!--                string attribute this is display name for End user-->
-                <filter name="age" string="Age" domain="['|',('age','=','22'),('age','=','25')]"> </filter>
-                <filter name="group_by" string="Country" context="{'group_by':'country'}"> </filter>
+                 <filter name="age" string="Age" domain="['|',('age','=','22'),('age','=','25')]"> </filter>
+                 <filter name="group_by" string="Country" context="{'group_by':'country'}"> </filter>
             </search>
         </field>
     </record>

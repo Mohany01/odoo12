@@ -1,7 +1,6 @@
 # noinspection PyUnresolvedReferences
 from odoo import models, fields, api, _
 import datetime
-
 from odoo.odoo.exceptions import ValidationError
 
 
@@ -23,15 +22,9 @@ class HospitalManagement(models.Model):
     image = fields.Binary()
     name_sequence = fields.Char(string='Patient Sequence', required=True, copy=False, readonly=1,
                                 index=True, default=lambda self: _('New'))
-    _sql_constraints = [('unique_name', 'unique("name")', 'This name already exist')]
-
-    @api.model
-    def create(self, vals):
-        if vals.get('name_sequence', _('New')) == _('New'):
-            vals['name_sequence'] = self.env['ir.sequence'].next_by_code('hospital.patient') or _('New')
-        # this line create the record
-        result = super(HospitalManagement, self).create(vals)
-        return result
+    _sql_constraints = [
+        ('unique_name', 'unique("name")', 'This Name Already Exist')
+    ]
 
     @api.depends('date_of_birth')
     def calc_age(self):
@@ -45,3 +38,31 @@ class HospitalManagement(models.Model):
         for rec in self:
             if rec.height == 0 or rec.weight == 0:
                 raise ValidationError('Please Add valid Number')
+
+    @api.model
+    def create(self, vals):
+        if vals.get('name_sequence', _('New')) == _('New'):
+            vals['name_sequence'] = self.env['ir.sequence'].next_by_code('hospital.patient') or _('New')
+        # this line create the record
+        result = super(HospitalManagement, self).create(vals)
+        return result
+
+    @api.model
+    def search(self, domain, offset=0, limit=None, order=None):
+        res = super(HospitalManagement, self).search(domain, offset=0, limit=None, order=None)
+        print("Read")
+        return res
+
+    def write(self, vals):
+        res = super(HospitalManagement, self).write(vals)
+        print("Write")
+        return res
+
+    def unlink(self):
+        res = super(HospitalManagement, self).unlink()
+        print("Delete")
+        return res
+
+
+
+
