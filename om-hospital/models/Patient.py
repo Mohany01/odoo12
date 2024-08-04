@@ -22,6 +22,7 @@ class HospitalManagement(models.Model):
     image = fields.Binary()
     name_sequence = fields.Char(string='Patient Sequence', required=True, copy=False, readonly=1,
                                 index=True, default=lambda self: _('New'))
+    # This is Validation in database [Data Tier]
     _sql_constraints = [
         ('unique_name', 'unique("name")', 'This Name Already Exist')
     ]

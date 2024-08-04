@@ -65,12 +65,12 @@
 
 
 
-    <record id="patients_action" model="ir.actions.act_window">
-            <field name="name">Patients</field>
-            <field name="res_model">hospital.patient</field>
-             <field name="view_mode">tree,form</field>
-            <field name="view_type">form</field>
-    </record>
+<!--    <record id="patients_action" model="ir.actions.act_window">-->
+<!--            <field name="name">Patients</field>-->
+<!--            <field name="res_model">hospital.patient</field>-->
+<!--             <field name="view_mode">tree,form</field>-->
+<!--            <field name="view_type">form</field>-->
+<!--    </record>-->
     <record id="doctors_action" model="ir.actions.act_window">
             <field name="name">Doctors</field>
             <field name="res_model">hospital.doctors</field>
@@ -80,8 +80,8 @@
     </record>
 
 
-    <menuitem id="hospital_root_menu" name="Hospital" sequence="10"/>
-    <menuitem id="patients_menu" name="Patients"  parent="hospital_root_menu" action="patients_action"/>
+<!--    <menuitem id="hospital_root_menu" name="Hospital" sequence="10"/>-->
+<!--    <menuitem id="patients_menu" name="Patients"  parent="hospital_root_menu" action="patients_action"/>-->
     <menuitem id="doctors_menu" name="Doctors" parent="hospital_root_menu" action="doctors_action"/>
 
 </odoo>
