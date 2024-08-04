@@ -5,7 +5,7 @@ import datetime
 
 class DoctorsManagement(models.Model):
     _name = 'hospital.doctors'
-    _inherit = ['mail.thread', 'mail.activity.mixin']  #_inherit is attribute and in _inherit tables
+    _inherit = ['mail.thread', 'mail.activity.mixin', "hospital.patient"]  #_inherit is attribute and in _inherit tables
     _description = 'Doctors Record'
     name = fields.Char(string="Name")
     phone_number = fields.Char()
@@ -20,7 +20,5 @@ class DoctorsManagement(models.Model):
 
     @api.depends('date_of_birth')
     def calc_age(self):
-        for record in self:
-            if record.date_of_birth:
-                date_obj = fields.Date.from_string(record.date_of_birth)
-                record.age = datetime.datetime.now().year - date_obj.year
+       result = super(DoctorsManagement, self).calc_age()
+       return result

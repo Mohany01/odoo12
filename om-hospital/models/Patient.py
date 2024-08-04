@@ -8,10 +8,10 @@ class PatientsManagement(models.Model):
     _name = 'hospital.patient'
     _description = 'Patient Record'
     # _log_access = False
-    name = fields.Char(required=1, default="New", size=7,)
-    height = fields.Float(digits=(1, 3))
+    name = fields.Char(required=1, default="New", size=7)
+    height = fields.Float(digits=(0, 1))
     phone_number = fields.Char()
-    weight = fields.Float()
+    weight = fields.Float(igits=(0, 1))
     date_of_birth = fields.Date()
     country = fields.Char(default="Egypt", readonly=1)
     age = fields.Integer(compute='calc_age')
