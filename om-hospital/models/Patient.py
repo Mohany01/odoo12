@@ -4,16 +4,16 @@ import datetime
 from odoo.odoo.exceptions import ValidationError
 
 
-class HospitalManagement(models.Model):
+class PatientsManagement(models.Model):
     _name = 'hospital.patient'
     _description = 'Patient Record'
     # _log_access = False
-    name = fields.Char(required=1, default="New", size=7, readonly=1)
+    name = fields.Char(required=1, default="New", size=7,)
     height = fields.Float(digits=(1, 3))
     phone_number = fields.Char()
     weight = fields.Float()
     date_of_birth = fields.Date()
-    country = fields.Char()
+    country = fields.Char(default="Egypt", readonly=1)
     age = fields.Integer(compute='calc_age')
     gender = fields.Selection([
         ('male', 'Male'),
@@ -46,22 +46,22 @@ class HospitalManagement(models.Model):
         if vals.get('name_sequence', _('New')) == _('New'):
             vals['name_sequence'] = self.env['ir.sequence'].next_by_code('hospital.patient') or _('New')
         # this line create the record
-        result = super(HospitalManagement, self).create(vals)
+        result = super(PatientsManagement, self).create(vals)
         return result
 
     @api.model
     def search(self, domain, offset=0, limit=None, order=None):
-        res = super(HospitalManagement, self).search(domain, offset=0, limit=None, order=None)
+        res = super(PatientsManagement, self).search(domain, offset=0, limit=None, order=None)
         print("Read")
         return res
 
     def write(self, vals):
-        res = super(HospitalManagement, self).write(vals)
+        res = super(PatientsManagement, self).write(vals)
         print("Write")
         return res
 
     def unlink(self):
-        res = super(HospitalManagement, self).unlink()
+        res = super(PatientsManagement, self).unlink()
         print("Delete")
         return res
 
