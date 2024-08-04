@@ -47,7 +47,7 @@
 <!--            <field name="view_mode">tree,form,graph</field>-->
 <!--    </record>-->
 
-    <menuitem id="hospital_root_menu" name="Hospital" sequence="10" web_icon="/erp/custom/om-hospital/static/description/icon.png"/>
+    <menuitem id="hospital_root_menu" name="Hospital" sequence="10" web_icon="om-hospital,static/description/icon.png"/>
     <menuitem id="patients_menu" name="Patients"  parent="hospital_root_menu"/>
     <menuitem id="doctors_menu" name="Doctors" parent="hospital_root_menu"/>
 

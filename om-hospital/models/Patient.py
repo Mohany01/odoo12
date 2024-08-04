@@ -8,7 +8,7 @@ class HospitalManagement(models.Model):
     _name = 'hospital.patient'
     _description = 'Patient Record'
     # _log_access = False
-    name = fields.Char(required=1, default="New", size=7)
+    name = fields.Char(required=1, default="New", size=7, readonly=1)
     height = fields.Float(digits=(1, 3))
     phone_number = fields.Char()
     weight = fields.Float()
@@ -20,9 +20,10 @@ class HospitalManagement(models.Model):
         ('female', 'Female')
     ])
     image = fields.Binary()
+    doctor_id = fields.Many2one('hospital.doctors')
     name_sequence = fields.Char(string='Patient Sequence', required=True, copy=False, readonly=1,
                                 index=True, default=lambda self: _('New'))
-    # This is Validation in database [Data Tier]
+
     _sql_constraints = [
         ('unique_name', 'unique("name")', 'This Name Already Exist')
     ]
