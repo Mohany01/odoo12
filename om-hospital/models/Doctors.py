@@ -20,5 +20,5 @@ class DoctorsManagement(models.Model):
 
     @api.depends('date_of_birth')
     def calc_age(self):
-       result = super(DoctorsManagement, self).calc_age()
-       return result
+        result = super(DoctorsManagement, self).calc_age()
+        return result

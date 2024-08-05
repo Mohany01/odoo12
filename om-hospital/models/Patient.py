@@ -16,8 +16,8 @@ class PatientsManagement(models.Model):
     country = fields.Char(default="Egypt", readonly=1)
     age = fields.Integer(compute='calc_age')
     gender = fields.Selection([
-         ('male', 'Male'),
-         ('female', 'Female')
+        ('male', 'Male'),
+        ('female', 'Female')
     ])
     image = fields.Binary()
     status = fields.Selection(
@@ -47,7 +47,7 @@ class PatientsManagement(models.Model):
                 raise ValidationError('Please Add valid Number')
 
     @api.model
-    def create(self, vals):
+    def create(self, vals):  #Vals is the dict
         if vals.get('name_sequence', _('New')) == _('New'):
             vals['name_sequence'] = self.env['ir.sequence'].next_by_code('hospital.patient') or _('New')
         # this line create the record
@@ -70,6 +70,15 @@ class PatientsManagement(models.Model):
         print("Delete")
         return res
 
+    def action_well(self):
+        for rec in self:
+            rec.write(
+                {'status': 'well'}
+            )
 
-
+    def action_sick(self):
+        for rec in self:
+            rec.write(
+                {'status': 'sick'}
+            )
 
