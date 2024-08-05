@@ -11,15 +11,20 @@ class PatientsManagement(models.Model):
     name = fields.Char(required=1, default="New", size=7)
     height = fields.Float(digits=(0, 1))
     phone_number = fields.Char()
-    weight = fields.Float(igits=(0, 1))
+    weight = fields.Float(digits=(0, 1))
     date_of_birth = fields.Date()
     country = fields.Char(default="Egypt", readonly=1)
     age = fields.Integer(compute='calc_age')
     gender = fields.Selection([
-        ('male', 'Male'),
-        ('female', 'Female')
+         ('male', 'Male'),
+         ('female', 'Female')
     ])
     image = fields.Binary()
+    status = fields.Selection(
+        [
+            ('well', 'Well'),
+            ('sick', 'Sick'),
+        ], default='well')
     doctor_id = fields.Many2one('hospital.doctors')
     name_sequence = fields.Char(string='Patient Sequence', required=True, copy=False, readonly=1,
                                 index=True, default=lambda self: _('New'))
