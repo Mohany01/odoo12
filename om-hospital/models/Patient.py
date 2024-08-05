@@ -14,7 +14,8 @@ class PatientsManagement(models.Model):
     weight = fields.Float(digits=(0, 1))
     date_of_birth = fields.Date()
     country = fields.Char(default="Egypt", readonly=1)
-    age = fields.Integer(compute='calc_age')
+    age = fields.Integer(compute='calc_age', store=1)
+    temperature = fields.Float(digits=(0, 1))
     gender = fields.Selection([
         ('male', 'Male'),
         ('female', 'Female')
@@ -24,7 +25,7 @@ class PatientsManagement(models.Model):
         [
             ('well', 'Well'),
             ('sick', 'Sick'),
-        ], default='well')
+        ], default='well',compute='compute_temperature')
     doctor_id = fields.Many2one('hospital.doctors')
     name_sequence = fields.Char(string='Patient Sequence', required=True, copy=False, readonly=1,
                                 index=True, default=lambda self: _('New'))
@@ -36,6 +37,7 @@ class PatientsManagement(models.Model):
     @api.depends('date_of_birth')
     def calc_age(self):
         for record in self:
+            print("in calc_age")
             if record.date_of_birth:
                 date_obj = fields.Date.from_string(record.date_of_birth)
                 record.age = datetime.datetime.now().year - date_obj.year
@@ -45,6 +47,23 @@ class PatientsManagement(models.Model):
         for rec in self:
             if rec.height == 0 or rec.weight == 0:
                 raise ValidationError('Please Add valid Number')
+
+    @api.onchange('height')
+    def _on_change(self):
+        # I use this for validation or to make anything if change happens
+        for rec in self:
+            if rec.height < 0:
+                return {
+                    'warning': {'title': 'warning', 'message': 'only positive numbers', 'type': 'notification '}
+                }
+
+    @api.depends('temperature')
+    def compute_temperature(self):
+        for rec in self:
+            if rec.temperature < 34:
+                rec.status = 'well'
+            else :
+                rec.status = 'sick'
 
     @api.model
     def create(self, vals):  #Vals is the dict

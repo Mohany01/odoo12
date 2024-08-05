@@ -64,8 +64,6 @@
                         <field name="age"> </field>
                          <field name="gender"> </field>
                          <field name="country"> </field>
-
-
                     </group>
 
                      <group string="Additional_Info">
@@ -73,6 +71,8 @@
                          <field name="date_of_birth"> </field>
                          <field name="height"> </field>
                          <field name="weight"> </field>
+                         <field name="temperature"> </field>
+
                     </group>
                     <group>
                         <field name="image"> </field>
